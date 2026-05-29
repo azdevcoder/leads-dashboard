@@ -169,12 +169,12 @@ export default function Home() {
             </div>
 
             {/* City Filter */}
-            <Select value={selectedCity || ""} onValueChange={(v) => setSelectedCity(v || null)}>
+            <Select value={selectedCity || "all"} onValueChange={(v) => setSelectedCity(v === "all" ? null : v)}>
               <SelectTrigger>
                 <SelectValue placeholder="Todas as cidades" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todas as cidades</SelectItem>
+                <SelectItem value="all">Todas as cidades</SelectItem>
                 {cities.map(city => (
                   <SelectItem key={city} value={city}>{city}</SelectItem>
                 ))}
@@ -182,12 +182,12 @@ export default function Home() {
             </Select>
 
             {/* Segment Filter */}
-            <Select value={selectedSegment || ""} onValueChange={(v) => setSelectedSegment(v || null)}>
+            <Select value={selectedSegment || "all"} onValueChange={(v) => setSelectedSegment(v === "all" ? null : v)}>
               <SelectTrigger>
                 <SelectValue placeholder="Todos os segmentos" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos os segmentos</SelectItem>
+                <SelectItem value="all">Todos os segmentos</SelectItem>
                 {segments.map(segment => (
                   <SelectItem key={segment} value={segment}>{segment}</SelectItem>
                 ))}
