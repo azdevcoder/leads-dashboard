@@ -4318,6 +4318,7 @@ Códigos de tarefa:
   - Domínio respondeu HTTP 200 com TLS válido; a falha estava nos paths dos assets, não na disponibilidade do host.
 - [x] Inspecionar os logs da aplicação publicada e identificar o erro de carregamento.
   - O HTML full-stack apontava para `/leads-dashboard/assets/*`, que o servidor devolvia como HTML em vez de JS/CSS.
-- [ ] Publicar a correção da base de assets e validar a sessão/autenticação do dashboard em produção.
-  - A configuração foi corrigida para `base: "/"`; testes, TypeScript e build passaram localmente. Falta publicar este checkpoint e validar o domínio.
-- [ ] Revalidar o redirecionamento do GitHub Pages somente depois de o domínio full-stack responder corretamente.
+- [x] Publicar a correção da base de assets e validar a sessão/autenticação do dashboard em produção.
+  - O usuário publicou o checkpoint e confirmou que o domínio full-stack voltou a funcionar.
+- [x] Revalidar o redirecionamento do GitHub Pages somente depois de o domínio full-stack responder corretamente.
+  - O GitHub Pages mantém o endereço de entrada e abre a aplicação full-stack recuperada.
