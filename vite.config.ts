@@ -153,9 +153,7 @@ function vitePluginManusDebugCollector(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
 export default defineConfig({
-  // A aplicação full-stack é publicada na raiz do domínio Manus.
-  // O GitHub Pages usa uma branch estática de redirecionamento independente.
-  base: "/",
+  base: process.env.VITE_DEPLOY_TARGET === "github-pages" ? "/leads-dashboard/" : "/",
   plugins,
   resolve: {
     alias: {

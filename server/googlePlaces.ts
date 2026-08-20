@@ -1,5 +1,3 @@
-import { ENV } from "./_core/env";
-
 const GOOGLE_PLACES_SEARCH_URL = "https://places.googleapis.com/v1/places:searchText";
 
 export type GooglePlaceSearchInput = {
@@ -34,7 +32,8 @@ type GooglePlacesResponse = {
 };
 
 export async function searchGooglePlaces(input: GooglePlaceSearchInput): Promise<GooglePlaceResult[]> {
-  if (!ENV.googlePlacesApiKey) {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  if (!apiKey) {
     throw new Error("GOOGLE_PLACES_API_KEY não configurada no servidor");
   }
 
@@ -46,7 +45,7 @@ export async function searchGooglePlaces(input: GooglePlaceSearchInput): Promise
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Goog-Api-Key": ENV.googlePlacesApiKey,
+      "X-Goog-Api-Key": apiKey,
       "X-Goog-FieldMask": [
         "places.id",
         "places.displayName",

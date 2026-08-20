@@ -1,0 +1,36 @@
+services:
+  - type: web
+    runtime: node
+    name: azdevcoder-leads-api
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
+    preDeployCommand: pnpm db:migrate
+    startCommand: pnpm start
+    autoDeployTrigger: commit
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_ORIGIN
+        value: https://azdevcoder.github.io
+      - key: API_PUBLIC_URL
+        value: https://azdevcoder-leads-api.onrender.com
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: azdevcoder-leads-db
+          property: connectionString
+      - key: GITHUB_OAUTH_CLIENT_ID
+        sync: false
+      - key: GITHUB_OAUTH_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false
+databases:
+  - name: azdevcoder-leads-db
+    databaseName: leads_dashboard
+    user: leads_dashboard
+    plan: free

@@ -22,7 +22,8 @@ export async function ensureSeedLeads(ownerId: number) {
     notes: null,
   }));
 
-  await db.insert(leads).values(values).onDuplicateKeyUpdate({
+  await db.insert(leads).values(values).onConflictDoUpdate({
+    target: [leads.ownerId, leads.sourceKey],
     set: { updatedAt: new Date() },
   });
 }
@@ -38,7 +39,7 @@ export async function updateLeadStatus(ownerId: number, leadId: number, status: 
   if (!db) throw new Error("Banco de dados indisponível");
 
   await db.update(leads)
-    .set({ status, ...(notes === undefined ? {} : { notes }) })
+    .set({ status, ...(notes === undefined ? {} : { notes }), updatedAt: new Date() })
     .where(and(eq(leads.ownerId, ownerId), eq(leads.id, leadId)));
 
   const updated = await db.select().from(leads)
@@ -56,7 +57,8 @@ export async function importLeads(ownerId: number, incoming: Array<Omit<InsertLe
     ...lead,
     ownerId,
     status: "Aguardando" as const,
-  }))).onDuplicateKeyUpdate({
+  }))).onConflictDoUpdate({
+    target: [leads.ownerId, leads.sourceKey],
     set: { updatedAt: new Date() },
   });
 

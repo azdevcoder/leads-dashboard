@@ -4322,3 +4322,33 @@ Códigos de tarefa:
   - O usuário publicou o checkpoint e confirmou que o domínio full-stack voltou a funcionar.
 - [x] Revalidar o redirecionamento do GitHub Pages somente depois de o domínio full-stack responder corretamente.
   - O GitHub Pages mantém o endereço de entrada e abre a aplicação full-stack recuperada.
+
+## Arquitetura híbrida com Render — 20 de agosto de 2026
+
+- [x] Avaliar se o Render suporta o backend atual, o banco remoto, o OAuth e o uso seguro do Google Places.
+  - Render suporta o servidor Node/Express e segredos de ambiente; a chave Google pode ficar no servidor. O atual OAuth e o banco geridos pelo hosting Manus precisam de substituição/migração para funcionar fora dele.
+- [x] Documentar a separação necessária entre frontend GitHub Pages e API pública protegida no Render.
+  - O Pages hospeda apenas o React; o Render expõe uma API HTTPS com CORS restrito ao domínio GitHub Pages. A API fica publicamente alcançável, mas segredos e regras de negócio não são enviados ao navegador.
+- [x] Definir as variáveis de ambiente, CORS, URLs de retorno OAuth e restrições de origem necessárias.
+  - O Render precisará de `GOOGLE_PLACES_API_KEY`, `DATABASE_URL`, `JWT_SECRET`, `CORS_ORIGIN`, configuração de OAuth substituta e um servidor que respeite `PORT` em `0.0.0.0`.
+- [x] Preparar as adaptações de código apenas após a confirmação do usuário para migrar o backend.
+  - Migração confirmada pelo usuário em 20 de agosto de 2026.
+
+## Migração executável para Render — 20 de agosto de 2026
+
+- [x] Inspecionar a integração Render disponível e confirmar o método de acesso à conta do usuário.
+  - A conta Render do usuário, no projeto `AzDev Coder`, está autenticada e pronta para vincular um novo Web Service pelo GitHub.
+- [x] Definir e substituir o OAuth e o banco dependentes do ambiente atual por alternativas portáveis.
+  - Decisão do usuário: GitHub OAuth, Render Postgres e tokens de acesso enviados no cabeçalho `Authorization`, sem cookies de terceiros.
+  - A implementação agora usa PostgreSQL, PKCE e JWT assinado; `pnpm check`, `pnpm test` e `pnpm build` foram aprovados localmente.
+- [ ] Criar OAuth App do GitHub com callback HTTPS do serviço Render e segredos exclusivos de produção.
+- [x] Converter o schema e as consultas Drizzle de MySQL para PostgreSQL, preservando usuários, leads e deduplicação.
+  - Migração PostgreSQL revista: enums de status e papel, tabelas `users` e `leads`, e índice único por proprietário/origem.
+- [x] Implementar login GitHub OAuth com PKCE, validação de `state` e emissão de token de sessão assinado.
+- [x] Atualizar o cliente tRPC para consumir a API Render via `VITE_API_URL` e enviar o token de sessão no cabeçalho.
+- [x] Configurar CORS restrito ao GitHub Pages, cookies seguros ou autenticação por token apropriada a origens distintas.
+  - A API aceita somente a origem do GitHub Pages e o cookie de curta duração é usado apenas no redirecionamento OAuth de primeira parte.
+- [x] Preparar `render.yaml`, comandos de build/start, health check e variáveis de ambiente sem valores secretos.
+- [ ] Adaptar o frontend estático para consumir a URL HTTPS da API remota.
+- [ ] Publicar o backend no Render e inserir segredos diretamente no painel seguro do serviço.
+- [ ] Atualizar o GitHub Pages, validar login, pesquisa Google Places e alteração de status ponta a ponta.
