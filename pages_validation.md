@@ -30,3 +30,17 @@ A versão pública com parâmetro de verificação carregou o dashboard com 63 l
 - O botão `Importar selecionados` foi exibido e começou sem seleções; nenhuma empresa foi importada durante o smoke test.
 - O servidor e o TypeScript estavam sem erros no último health check; os testes Vitest passaram: 4 testes em 2 ficheiros.
 - A API de pesquisa está protegida por sessão e a chave `GOOGLE_PLACES_API_KEY` permanece apenas no servidor.
+
+## Publicação GitHub Pages estática — estado atual
+
+- A branch `gh-pages` já existe no repositório e contém o build estático, incluindo `.nojekyll`, `index.html` e `assets/`.
+- A configuração atual do Pages ainda aponta para `main` na raiz.
+- A atualização da origem via API GitHub devolveu HTTP 403 (`Resource not accessible by integration`), portanto é necessária uma alteração única na interface do GitHub: Settings → Pages → Source → Deploy from a branch → `gh-pages` → `/ (root)` → Save.
+
+## Confirmação no GitHub — branch estática
+
+A branch `gh-pages` está visível no repositório público `azdevcoder/leads-dashboard`, com o commit `bfcc7c2` (`Publish static dashboard to GitHub Pages`). A raiz contém `index.html`, `.nojekyll`, `assets/` e `__manus__/`. A configuração de Pages ainda indica `main` como origem, portanto o conteúdo está no repositório, mas a URL pública só passará a servi-lo quando a origem for alterada para `gh-pages`.
+
+## Validação final do 404
+
+Após reconstruir a branch `gh-pages` a partir da fonte estática `f72e30a` e publicar o commit `c882525`, a URL `https://azdevcoder.github.io/leads-dashboard/?v=c8825252` abriu o dashboard corretamente no navegador. A interface mostrou `63 de 63 leads`, filtros por cidade e segmento, busca por nome/telefone e exportação CSV; não apareceu o componente 404. A configuração do Pages agora aponta para `gh-pages` na raiz. O cache antigo pode continuar a aparecer em algumas abas por alguns minutos; a URL com `?v=c8825252` confirma a versão nova.

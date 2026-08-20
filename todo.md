@@ -4247,3 +4247,47 @@ Códigos de tarefa:
 - [x] Manter as referências `GP-*` para rastreabilidade sem as utilizar como evidência de implementação.
 - [x] Centralizar a evidência verificável nas tarefas descritivas desta secção: código em `server/`, interface em `client/src/`, migração em `drizzle/`, testes Vitest e validações registadas em `pages_validation.md`.
 - [x] Registar a mudança de arquitetura: a pesquisa Google Places com chave privada exige o servidor full-stack do projeto; a versão estática no GitHub Pages permanece limitada ao dashboard sem API protegida.
+
+## Publicação compatível com GitHub Pages — 20 de agosto de 2026
+
+- [x] Criar uma referência de publicação estática baseada na última versão compatível com GitHub Pages.
+  - Fonte isolada no commit `f72e30a`; build reconstruído em `/home/ubuntu/leads-dashboard-static`.
+- [x] Publicar o build estático na branch `gh-pages` sem substituir a branch `main` full-stack.
+  - Commit publicado: `c882525`; a `main` full-stack permaneceu intacta.
+- [x] Configurar o GitHub Pages para servir a raiz da branch `gh-pages`.
+  - Configuração confirmada via API: `branch=gh-pages`, `path=/`.
+- [x] Validar a URL `https://azdevcoder.github.io/leads-dashboard/` e confirmar filtros, status local e exportação.
+  - A URL com cache busting carregou 63 leads, filtros e exportação sem 404.
+- [x] Documentar claramente que a pesquisa Google integrada, autenticação e persistência no banco não fazem parte da versão estática.
+
+## Verificação da publicação estática — 20 de agosto de 2026
+
+- [x] Confirmar via GitHub que a branch `gh-pages` existe e contém `index.html`, `.nojekyll` e `assets/`.
+- [x] Confirmar que o commit remoto da branch `gh-pages` corresponde ao build estático esperado.
+  - Commit remoto final: `c882525`.
+- [x] Reenviar a branch somente se o conteúdo remoto estiver ausente ou incorreto.
+  - Conteúdo foi atualizado porque o commit anterior executava o roteamento full-stack.
+- [x] Confirmar no GitHub Pages se a origem ainda está em `main` ou se já foi alterada para `gh-pages`.
+  - Origem final: `gh-pages` / `/ (root)`.
+- [x] Validar a resposta pública depois da atualização da origem.
+  - URL pública carregou o dashboard estático sem 404 com cache busting.
+
+## Incidente 404 no GitHub Pages — 20 de agosto de 2026
+
+- [x] Confirmar a URL exata que devolveu 404 e os headers/resposta atuais.
+  - O HTML carregava, mas a aplicação full-stack caía no componente `NotFound` no subcaminho.
+- [x] Confirmar se o GitHub Pages está a servir `main` ou `gh-pages`.
+  - A origem foi corrigida para `gh-pages`.
+- [x] Confirmar se o commit publicado tem `index.html` na raiz e assets referenciados corretamente.
+  - Commit `c882525`; assets responderam HTTP 200.
+- [x] Corrigir a origem ou o artefacto e aguardar nova publicação.
+  - Artefacto estático reconstruído e branch atualizada com `--force-with-lease`.
+- [x] Validar a URL canónica e o carregamento dos assets sem 404.
+  - Dashboard carregou no navegador; `index.html`, JS e CSS responderam sem 404.
+
+## Correção do 404 no build estático — 20 de agosto de 2026
+
+- [x] Comparar o artefacto atual de `gh-pages` com a última fonte estática conhecida.
+- [x] Reconstruir a aplicação estática sem autenticação/tRPC e com rota compatível com `/leads-dashboard/`.
+- [x] Publicar o novo artefacto na branch `gh-pages` usando atualização segura da branch criada para este fim.
+- [x] Testar a URL canónica, `index.html` e os assets com cache busting.
