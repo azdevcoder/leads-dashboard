@@ -206,7 +206,9 @@ function vitePluginStorageProxy(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
-  base: '/leads-dashboard/',
+  // GitHub Pages publishes this repository under /leads-dashboard/.
+  // Keep the root path for local development and use the repository path in production.
+  base: process.env.NODE_ENV === "production" ? "/leads-dashboard/" : "/",
   plugins,
   resolve: {
     alias: {
