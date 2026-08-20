@@ -44,3 +44,7 @@ A branch `gh-pages` está visível no repositório público `azdevcoder/leads-da
 ## Validação final do 404
 
 Após reconstruir a branch `gh-pages` a partir da fonte estática `f72e30a` e publicar o commit `c882525`, a URL `https://azdevcoder.github.io/leads-dashboard/?v=c8825252` abriu o dashboard corretamente no navegador. A interface mostrou `63 de 63 leads`, filtros por cidade e segmento, busca por nome/telefone e exportação CSV; não apareceu o componente 404. A configuração do Pages agora aponta para `gh-pages` na raiz. O cache antigo pode continuar a aparecer em algumas abas por alguns minutos; a URL com `?v=c8825252` confirma a versão nova.
+
+## Redirecionamento para a versão full-stack
+
+A branch `gh-pages` foi atualizada para o commit `4ab4c8f`, que contém uma página de redirecionamento para `https://leadsdash-wrpfc2sq.manus.space`. O GitHub Pages concluiu o build com origem `gh-pages` na raiz. A resposta pública inclui meta refresh, ligação de contingência e `window.location.replace` para o domínio full-stack. A tentativa de confirmar a navegação automatizada no browser falhou por timeout da extensão, mas a publicação e o conteúdo do redirecionamento foram confirmados por API e HTTP. A versão estática anterior foi preservada na branch `gh-pages-static-archive`, no commit `c882525`.

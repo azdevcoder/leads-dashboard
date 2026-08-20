@@ -4291,3 +4291,23 @@ Códigos de tarefa:
 - [x] Reconstruir a aplicação estática sem autenticação/tRPC e com rota compatível com `/leads-dashboard/`.
 - [x] Publicar o novo artefacto na branch `gh-pages` usando atualização segura da branch criada para este fim.
 - [x] Testar a URL canónica, `index.html` e os assets com cache busting.
+
+## Alinhamento entre Pré-visualização e publicação — 20 de agosto de 2026
+
+- [x] Comparar os recursos do dashboard full-stack em pré-visualização com os recursos estáticos da branch `gh-pages`.
+  - A versão estática não executa o servidor de autenticação, banco e Google Places da Pré-visualização.
+- [x] Definir com o usuário se a prioridade é a versão completa em hosting full-stack ou uma réplica estática limitada no GitHub Pages.
+  - O usuário autorizou manter o endereço GitHub Pages como entrada e abrir a aplicação full-stack.
+- [x] Aplicar apenas a alternativa de hospedagem escolhida e validar a experiência final.
+  - GitHub Pages redireciona para o domínio full-stack; a resposta foi confirmada por API e HTTP.
+
+## GitHub Pages como redirecionamento para a versão completa — 20 de agosto de 2026
+
+- [x] Confirmar o domínio full-stack de destino e a disponibilidade pública.
+  - Destino: `https://leadsdash-wrpfc2sq.manus.space`.
+- [x] Substituir o conteúdo estático da branch `gh-pages` por uma página de redirecionamento acessível e sem credenciais.
+  - Commit publicado: `4ab4c8f`.
+- [x] Preservar uma ligação alternativa para a versão estática limitada no histórico do repositório.
+  - Branch preservada: `gh-pages-static-archive` no commit `c882525`.
+- [x] Validar que o endereço GitHub Pages redireciona para a versão full-stack publicada.
+  - Build do Pages concluído; HTML público contém meta refresh, ligação acessível e redirecionamento JavaScript para o domínio full-stack.
