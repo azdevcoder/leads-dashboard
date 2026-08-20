@@ -17,7 +17,8 @@
   - O endpoint `/index.html` devolve o dashboard.
   - A aplicação pública carrega 63 leads e a busca por `Oficina Mecânica Valmir` retorna 1 resultado.
   - A URL canónica pode permanecer em cache por alguns minutos no CDN do GitHub Pages.
-- [ ] Documentar o resultado e as ações restantes, caso o GitHub exija uma confirmação na interface.
+- [x] Documentar o resultado e as ações restantes, caso o GitHub exija uma confirmação na interface.
+  - Registado que o modo full-stack com API protegida deve usar o hosting full-stack do projeto, não GitHub Pages estático.
 
 ## Decisões
 
@@ -4205,3 +4206,37 @@ Códigos de tarefa:
 - [ ] GP-4169
 - [ ] GP-4170
 - [ ] GP-
+
+## Evolução: pesquisa de empresas e status
+
+- [x] Inspecionar o componente de mapas, a página Home e o modelo atual de leads.
+- [x] Inspecionar conectores disponíveis para Google/Maps e verificar se há credencial/API autorizada.
+- [x] Definir uma pesquisa compatível com GitHub Pages, sem expor chaves no frontend.
+  - Requisito superseded pela escolha do utilizador: a pesquisa agora usa backend seguro, porque a API integrada não pode ser protegida num site estático.
+- [x] Implementar os estados `Aguardando`, `Em Atendimento`, `Atendido` e `Recusado`.
+- [x] Persistir os estados no navegador e manter os dados depois de recarregar a página.
+  - A persistência passou a ser feita no banco de dados por utilizador, em vez de apenas no navegador.
+- [x] Adicionar filtro por status e indicador visual de cada estado.
+- [x] Adicionar fluxo para pesquisar empresas e importar resultados selecionados sem duplicação.
+- [x] Atualizar a exportação CSV com o status atual.
+- [x] Testar pesquisa, filtros, persistência, exportação e responsividade.
+  - Health check sem erros TypeScript; smoke test autenticado confirmou 63 leads e 10 resultados Google Places; `pnpm check`, `pnpm test` e `pnpm build` passaram.
+- [x] Publicar a nova versão no GitHub Pages e documentar limitações/configuração necessária.
+  - Com backend e autenticação, esta versão deve ser publicada pelo hosting full-stack do projeto; GitHub Pages não consegue executar a API protegida.
+
+## Integração Google Places API e backend
+
+- [x] Resolver os conflitos introduzidos na evolução para aplicação com servidor, preservando o dashboard existente.
+  - Home existente preservada e substituída por uma interface CRM; o DashboardLayout do template foi personalizado.
+- [x] Definir e aplicar o modelo de lead persistente no banco de dados.
+  - Tabelas `users` e `leads` criadas; status e deduplicação por utilizador incluídos.
+- [x] Criar procedimentos protegidos para listar leads, atualizar status e importar resultados.
+  - Rotas tRPC protegidas por sessão adicionadas em `server/routers/leads.ts`.
+- [x] Criar procedimento de pesquisa Google Places no servidor, com limite de resultados e tratamento de erros.
+  - Text Search (New) usa POST oficial, field mask explícito e máximo de 20 resultados por chamada.
+- [x] Solicitar e configurar `GOOGLE_PLACES_API_KEY` como segredo do servidor.
+  - A validação real da credencial passou após configurar a chave com Places API (New) e permissões de servidor.
+- [x] Adicionar testes Vitest para a normalização de resultados, estados válidos e deduplicação.
+  - 4 testes passaram em `server/leads.test.ts` e `server/googlePlaces.credentials.test.ts`.
+- [x] Executar migração segura do banco e verificar a aplicação.
+  - A migração criou `users` e `leads`; a pré-visualização autenticada carregou os 63 leads iniciais e a pesquisa real respondeu.

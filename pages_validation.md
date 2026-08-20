@@ -20,3 +20,13 @@ A validação funcional do build final via URL com parâmetro mostrou o dashboar
 ## Teste funcional concluído
 
 A versão pública com parâmetro de verificação carregou o dashboard com 63 leads. A busca por `Oficina Mecânica Valmir` funcionou em tempo real e reduziu os resultados para 1 lead, exibindo o telefone e as ações `WhatsApp` e `Ligar`. Isso confirma que o bundle, o CSS, a renderização React e a filtragem principal estão operacionais no GitHub Pages.
+
+## Validação full-stack — 20 de agosto de 2026
+
+- Após o login, o dashboard carregou corretamente o utilizador autenticado e os 63 leads iniciais.
+- Os contadores exibiram `Aguardando: 63`, `Em Atendimento: 0`, `Atendido: 0` e `Recusado: 0`.
+- O modal `Buscar empresas` abriu com campos de segmento, cidade, estado e quantidade.
+- A pesquisa real `clínicas odontológicas` em `Curitiba, PR` retornou 10 resultados do Google Places, com nome, endereço, telefone e link para o Google Maps.
+- O botão `Importar selecionados` foi exibido e começou sem seleções; nenhuma empresa foi importada durante o smoke test.
+- O servidor e o TypeScript estavam sem erros no último health check; os testes Vitest passaram: 4 testes em 2 ficheiros.
+- A API de pesquisa está protegida por sessão e a chave `GOOGLE_PLACES_API_KEY` permanece apenas no servidor.
