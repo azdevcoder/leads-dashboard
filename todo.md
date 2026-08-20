@@ -4311,3 +4311,13 @@ Códigos de tarefa:
   - Branch preservada: `gh-pages-static-archive` no commit `c882525`.
 - [x] Validar que o endereço GitHub Pages redireciona para a versão full-stack publicada.
   - Build do Pages concluído; HTML público contém meta refresh, ligação acessível e redirecionamento JavaScript para o domínio full-stack.
+
+## Incidente no domínio full-stack — 20 de agosto de 2026
+
+- [x] Confirmar a resposta HTTP, o certificado e a rota inicial de `leadsdash-wrpfc2sq.manus.space`.
+  - Domínio respondeu HTTP 200 com TLS válido; a falha estava nos paths dos assets, não na disponibilidade do host.
+- [x] Inspecionar os logs da aplicação publicada e identificar o erro de carregamento.
+  - O HTML full-stack apontava para `/leads-dashboard/assets/*`, que o servidor devolvia como HTML em vez de JS/CSS.
+- [ ] Publicar a correção da base de assets e validar a sessão/autenticação do dashboard em produção.
+  - A configuração foi corrigida para `base: "/"`; testes, TypeScript e build passaram localmente. Falta publicar este checkpoint e validar o domínio.
+- [ ] Revalidar o redirecionamento do GitHub Pages somente depois de o domínio full-stack responder corretamente.
